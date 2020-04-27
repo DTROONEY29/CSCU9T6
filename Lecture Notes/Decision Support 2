@@ -226,3 +226,65 @@ Backward chaining was used in the MYCIN diagnosis system.
 
 *** The e2glite shell probably uses a combination of forward and Backward
 chaining.
+
+--------------------------------------------------------------------------
+
+----- Reasoning about uncertainty -----
+
+Rule based systems are an attempt to embody the knowledge of a human expert
+within a computer system.
+
+Human knowledge is often imperfect.
+
+To construct an RBS that recreates human reasoning, we must find ways 
+of reasoning in the presence of uncertainty.
+
+----- Kinds of uncertainty -----
+Generally, uncertainty in AI refers to situations where:
+
+- information is incomplete or
+- information is not reliable or
+- language used is inerently imprecise, or
+- there is conflicting information or
+- information is approximate
+
+Many approaches have been developed to deal with this in AI systems.
+We shall look at these approaches:
+
+- Reasoning with uncertainty in Rule based systems.
+- Certainty factors and probability
+- Fuzzy sets and fuzzy logic
+
+----- Dealing with uncertainty -----
+The standard approach of a rule based system is:
+
+Ask the user for information, e.g.Yes/No or menu choice, then proceed
+with further steps, based on the answer.
+
+Handling uncertainty means accomodating responses like:
+
+- maybe, probably, don't know, "well, its something between medium and high"
+
+The information is which we have may be uncertain. But we may still be able
+to draw conclusions, perhaps with some level of uncertainty attached.
+
+Uncertainty may also apply to the reasoning process:
+
+If P and Q then it is likely that......
+
+----- Certainty Factors -----
+
+This was the method used by MYCIN, one of the early trailblazing rule 
+based systems, and since then adopted by many other systems, including
+e2glite.
+
+A certainty factor (also known as confidence factor) involves a measure 
+which represents a level of confidence that some condition is true.
+
+Certainty factors have been implemented differently in different systems.
+
+In e2glite, certainty factors are expressed as percentages. eg. 100% is 
+complete certainty and 0% means no certainty.
+
+In MYCIN, the factors were implemented as numbers -1 to 1.
+
