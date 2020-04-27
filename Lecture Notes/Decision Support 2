@@ -1,0 +1,228 @@
+Information Systems 
+
+2 - Decision Support Systems  ------------------
+
+-------- Rule Based Systems --------
+
+Rule based systems are also known as "Expert Systems".
+
+The idea is :
+
+To capture the knowledge of a human expert in a specialised domain 
+and embody it within a software system.
+
+This knowledge is stored as rules of the form IF condition THEN action
+
+------ ARCHITECTURE OF A RBS -----
+
+- Knowledge base - contains the rules embodying expert knowledge about the 
+  problem domain.
+
+- Database - contains the set of known facts about the problem currently being
+  solved.
+
+- Inference Engine - carries out the reasoning process by linking the rules
+  with the known facts to find a solution.
+
+- Explanation facilities - provides information to user about the reasoning
+  steps that are being followed.
+
+- User interface - communication between the user and the system.
+
+----- KNOWLEDGE ENGINEERING -----
+
+Knowledge engineering - integrating knowledge into computer systems 
+
+KE is a process used to create a RBS:
+
+ASSESSING the problem and SELECTING an appropriate task for the RBS.
+
+INTERVIEWING the domain expert to find out how the problem is solved.
+
+REPRESENTING the domain knowledge as facts or rules.
+
+CHOOSING appropriate development software such as a RBS "shell" and 
+ENCODING the knowledge within that software.
+
+TESTING, REVISING, and INTEGRATING the system in the workplace.
+
+----- EXPERT SYSTEM SHELLS -----
+
+Modern RBS are usually implemented by customizing an off the shelf expert
+system "shell".
+
+Shell provides inference engine, explanation facility and the infrastructure.
+
+Shell provides interfaces for the developers and (maybe) for end users.
+
+The RBS is built by population the knowledge base and database with suitable
+rules and facts, and (if necessary) creating suitable user interfaces.
+
+Examples of shells: e2glite, JESS (rule engine for java platform)
+
+----- E2glite: building a knowledge base -----
+
+The knowledge base consists of a set of IF.... THEN.... rules.
+(see slides for examples)
+
+Because it is made up of rules the knowledge base is sometimes called
+the "rule base".
+
+----- ANATOMY OF A RULE -----
+
+The part of the rule after the IF is called the PREMISE or ANTECEDENT.
+It contains what will be "SUBGOALS".
+
+The part of the rule after the THEN is called the CONSEQUENT or CONCLUSION.
+
+The NAME of the rule comes after RULE.
+
+----- USING AND AND or IN rules -----
+
+The body of a rule may contain several subgoals, combined with "and" or
+"or". And or or may be combined together in the same rule.
+
+----- ATTRIBUTES -----
+
+Attributes are somewhat like variables in java, in that they are used to store
+values for future use. The values may be boolean (true/false), text strings or numeric.
+
+Attributes do not need to be declared and can hold multiple values at the same time.
+
+Attribute names are enclosed in square brackets, may contain spaces,
+and are not case sensitive.
+
+Here are some examples of attribute names:
+
+[a petrol smell], [the reccomended action], [the result of trying the starter]
+
+----- Giving values to Attributes -----
+
+Attributes may be given a value in the CONCLUSION of the rule.
+
+Attributes may also be given a value via prompts for input from the user.
+
+----- Comapring attributes -----
+
+Attributes may be compared with each other or with literal values in the PREMISE
+of a rule using various relational operators.
+
+example : [petrol tank] = "empty" (equals)
+
+----- USER INPUT -----
+
+The value of an attribute may be obtained by input from a user .
+
+User input is obtained via PROMPTS.
+
+Example: 
+
+---------------------------------------------------------------
+PROMPT [the result of trying the starter] Choice
+"What happeens when you turn the key to try to strat the car?"
+
+"the engine tumbles normally"
+"the engine tumbles slowly"
+"nothing happens"
+---------------------------------------------------------------
+
+This is a choice prompt : it displays a question followed by a drop-down
+list of response choices. The response is placed in the attribute 
+[the result of trying the starter].
+
+----- The top level goal -----
+
+The aim of a consultation with an e2glite RBS is to find a value (or values)
+for some goal attribute.
+
+In the automatic diagnosis system, the goal attribute is [teh reccomended action].
+
+Goal attributes are specified via a GOAL command eg:
+
+GOAL [the recommended action]
+
+A rule base must contain ONE OR MORE goal commands.
+
+If convenient we may provide a default value for a goal attribute.
+This value will be returned if the system is unable to find any other 
+value using the rules.
+
+----- STRUCTURE OF A RULE BASE -----
+
+A typical rule base will consist of:
+
+- A set of rules, followed by...
+- A set of prompts for user input, followed by...
+- One or more goals, with optional default values 
+
+Comments may be used to seperate the sections and to document the code.
+Comments are written in lines beginning with the command REM.
+
+----- Inference in a rule based KBS -----
+
+The inference process used in a rule based system is "deductive inference".
+Recall that this means the rules of logic are used to deduce new knowledge
+from existing knowledge and rules.
+
+There are various different approaches to managing deductive inference.
+The most significant distinction is between:
+
+- Forward chaining 
+- Backward chaining
+
+----- Forward Chaining -----
+
+Suppose we have a set of rules of the form:
+
+If A and B then C 
+
+Then we may apply such rules to reason "forwards" from the known facts 
+in our database, to establish new conclusions(i.e. facts) to add to the 
+database.
+Specifically, if A and B are facts in our database, we can apply the rule 
+above and add C to the database. This is also called data-driven reasoning.
+
+The problem with this approach is controlling it. At any given stage 
+there may be many different rules which may be chosen to apply to extend the 
+body of knowledge.
+Idnetifying them all is a potential problem (matching).
+Deciding which one to use is another (conflict resolution).
+
+Alternative approaches are:
+
+- Use the first rule found.
+- Attach priorities to rules.
+- Use the most specific rule possible.
+- Use heuristics to decide which rule will be most advantageous.
+- INvestigate in parallel the results of using different rules.
+
+All approaches must deal with the problem of combinational explosion.
+
+Forward chaining is useful in RBS where no specific goal is being explored.
+It was used in the DENDRAL system for soil analysis.
+
+----- Backward Chaining -----
+
+We can think of our rules as:
+
+C if A and B 
+
+We can then think of applying such rules in a goal-driven manner.
+If we have a specific goal in view (e.g. we are trying to confirm the 
+diagnosis of some disease.) then:
+
+To justify C, apply the rule to generate subgoals A and B.
+Then attempt to justify the subgoals in the same manner, by generating
+further subgoals, until....
+
+....all subgoals are facts present in the database.
+
+In general this also requires some control:
+
+- Where alternative rules exist, THE ORDER MAY MATTER
+- Many dead ends may be tried before the solution is found.
+
+Backward chaining was used in the MYCIN diagnosis system.
+
+*** The e2glite shell probably uses a combination of forward and Backward
+chaining.
