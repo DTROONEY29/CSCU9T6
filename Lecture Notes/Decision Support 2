@@ -288,3 +288,313 @@ complete certainty and 0% means no certainty.
 
 In MYCIN, the factors were implemented as numbers -1 to 1.
 
+----- Certainty Factors in e2glite -----
+
+In operation the user may be asked questions in the form :
+
+[see slides]
+
+The user must choose a response(yes,no or I don't know) and choose a 
+level of confidence (from 50% to 100%) in that response. If the users 
+confidence level in a response option is below 50%, then a different 
+response option should be chosen.
+
+----- Certainty factors in prompts -----
+
+We have YESNO prompts. When they are "run", it will attempt to determine
+a boolean value for the attribute that follows the word PROMPT.
+
+Building on the previous section, if a user replies yes and chooses 
+a confidence level of 50%, then the attribute following PROMPT
+[the headlights dim], will get the value TRUE, with CF 50%.
+
+Certainty factors may be used with all kinds of prompts, simply by adding
+CF after the prompt type.
+
+----- Certainty factors in rules -----
+
+A rule based system can propagate CFs via rules to give CFs to 
+conclusions. 
+
+If no CF is given for a rule it is assumed to be 100%.
+
+########## See lecture slides fpr abstract examples ##########
+
+----- Combining Certainty factors -----
+
+When conditions are combined using AND or OR, the following rules are 
+used to calculate the CF of the combination:
+
+CF(A and B) = minimum of CF(A), CF(B)
+CF(A or B) = maximum of CF(A), CF(B)
+
+When applying a rule of the form IF P then Q @ N, the CF of the conclusion
+Q is determined by combining the CF of the premise P and the CF of the rule
+itself , N:
+
+CF(Q) = CF(P) x N/100
+
+NOTE: Division by 100 is needed to get a result in the range 0-100
+
+############ see slides for examples ############
+
+----- Combining Rules -----
+
+It may happen that a conclusion is supported by more than one rule.
+Eg. in addition to the rules above, we might have another rule for A:
+
+If P and Q Then A @ 80
+
+This could lead to a quite independent calculation of a CF for A. How should 
+this be combined with the other one to obtain an overall CF?
+
+Different solutions have been adopted in different rule based systems 
+. 
+
+e2glite:
+
+Suppose that we find certainty factors CF1 and CF2 for a conclusion A 
+by application of two independent rules. We can then calculate an overall
+CF by applying the following formula:
+
+CF(A) = CF1 + CF2(100 - CF1)/100
+
+
+----- Confidence factors - Evaluation -----
+
+Although they resemble probabilities, confodence factors ARE NOT the same.
+Unlike probabilities, thre is no rigorous mathematical basis for using CFs.
+The formulas used are somewhat arbitrary.
+
+The use of CFs has therefore been criticized (with some justification)
+for not being rigorously founded.
+
+It is only as good as its input (users guesses).
+
+But it has been found to be remarkably resilient. Systems which use them 
+seem to work reasonably well in practice, in comparison with human experts.
+
+Human experts don't use rigorous mathematical theory either.
+
+
+----------------------------------------------------------------------------
+
+--------- Fuzzy Logic Control Systems ---------
+
+----- Fuzzy sets and Fuzzy Logic -----
+
+----- Fuzzy Sets -----
+
+Here properties are represented by FUZZY SETS.
+
+Properties might be like:
+
+- temperature (fuzzy sets: hot, warm, cool, cold)
+- height (fuzzy sets: short, average, tall)
+- degree of danger (fuzzy sets: safe, dangerous)
+
+For example, we might say :
+
+- the water is cold 
+- Jack is tall
+- Rover is dangerous 
+
+----- Fuzzy Properties -----
+
+Fuzzy set theory and fuzzy logic provide a precise, mathematical basis
+for reasoning about fuzzy sets annd fuzzy properties. 
+
+In classical, 2 valued logic, we would have to distinguish COLD from
+NOT COLD by fixing a strict changeover point. We might decide that anything
+below 8 degrees celsius is COLD, and anything else is NOT COLD. This can be 
+rather arbitrary. 
+
+Fuzzy logic lets us avoid having to choose an arbitrary changeover point
+essentially by allowing a whole spectrum of "degrees of coldness".
+
+A set of temperatures like HOT or COLD is represented by a FUNCTION.
+Given a temperature, the function will return a number representing the
+degree of membership of that set. This number is called a Fuzzy Measure.
+
+----- Fuzzy Measures -----
+
+The basis of the idea of "coldness" may be how people use the word "cold".
+Perhaps:
+
+- 30% of people think that 10 degrees C is cold (function value 0.3), and
+- 90% think that 0 degrees C is cold (function value 0.9)
+
+Also it may depend on the context. In terms of the weather, "cold" means
+one thing. In terms of the temperature of the coolant in a nuclear reactor
+"cold" may mean something else, so we would need to have a "cold" function
+appropriate to our context.
+
+----- Fuzzy Sets -----
+
+Fuzzy sets may be thought of as tables of values, but often they are 
+concerned with measurements that are made on a continuous scale.
+
+So a fuzzy set is represented by a graph - the graph of the function which
+calculates, for each measurement value, the corresponding degree (in the range 0 to 1)
+to which the fuzzy property holds.
+
+The opposite of "fuzzy" is "crisp". Crisp values are exact measurements 
+(e.g. the temp recorded by a thermometer). The graph of a fuzzy set shows 
+how the crisp values (on the x-axis) are assigned a fuzzy measure (on the y-axis)
+showing their degree of membership of the set.
+
+Tallness may be represented in such a way, perhaps via a graph like 
+this : (see slides 3 - page 5)
+
+Here is a different graph showing three fuzzy sets.
+Notice the overlaps between cold and warm, and between warm and hot.
+80 degreed is hot (0.5) and also warm(0.2):
+
+(see slides 3 - page 6)
+
+----- Fuzzy -----
+
+The values attached to properties in fuzzy logic are in some ways like 
+probabilities, but it is clearly NOT PROBABILITIES that we are dealing 
+with here.
+
+We may know jacks height exactly. The assertion "Jack is tall(0.75)"
+measures how well Jacks height matches the sense of the word "tall".
+
+On the other hand, "the probability that Jack is tall is 0.75" would 
+normally be used in a situation where we don't actually know jacks height.
+
+----- Fuzzy sets in RBS -----
+
+The benefit of all this is that the rules of an RBS can use (e.g.) the 
+idea of "coldness", rather than arbitrary changeover points involving 
+specific values of temperature.
+
+The most successful applications of fuzzy logic have been in automatic
+control systems(e.g. washing machines, AC). The benefits include:
+
+Rules in fuzzy logic are clearer and simpler to understand.
+
+Fuzzy logic controllers can be more efficient and give smoother operation
+(e.g. fuzzy AC vs traditional thermostat).
+
+Next we will look at a fuzzy logic controller for an automobile cruise control
+system...
+
+----- Feedback Control Systems -----
+
+It observes the system output to correct any deviation from the desired 
+value.
+
+Any changes in the manipulated variables are applied using the target system.
+
+Reference input - desired value of the control variable.
+Error - difference between the desired and measured value.
+Control input - manipulated variable .
+Disturbances - various changes in the system.
+Measured output - current measurement of the control variable.
+
+(see slide for diagram)
+
+---------------------------------------------------------------------------------
+
+----- Case Based Reasoning -----
+
+Unlike RBS and fuzzy logic, CBR does not use any rules or logical deduction
+(inference).
+
+Instead, CBR relies on the process of reasoning by analogy:
+
+Here is a new problem. How can we solve it?
+
+COMPARE the new problem to all the problems we solved in the past. Which 
+one does it resemble the most?
+
+REUSE the solution of the most similar past problem by adapting it to get a 
+solution for the new problem.
+
+And finally, FILE AWAY the new problem and it's solution for Reference
+in solving future problems.
+
+----- Case based systems -----
+
+KNOWLEDGE IS STORED not as rules but AS RECORDS OF CASES.
+
+Basic approach:
+
+IDENTIFY CERTAIN IMPORTANT ASPECTS ("attributes") OF "CASES". These might
+be particular circumstances which make up a situation, or particular 
+features of objects.
+
+STORE THE DETAILS (values of attributes) OF KNOWN CASES IN SEPERATE RECORDS
+(perhaps using a relational database). The values stored may be numerical 
+"codes" (indices). The known cases may be from actual experience or may be 
+invented.
+
+Given partial information about a subsequent case, we can LOOK UP THE
+CASE LIBRARY TO MATCH what we know with one or more stored cases, the
+details of which should provide more info pertinent to the new case.
+
+So a case based system will involve: 
+
+1. A library of cases.
+
+2. A means of using key elements of the present situation to find and 
+retrieve the most similar cases(s) from the library. NOTE: this may 
+incorporate a sophisticated way of judging similarity.
+
+3. A means of drawing conclusions. Because we may not find an exact fit,
+some judgement may have to be exercised. This stage is known as "adaption".
+
+----- Structure of a case based system -----
+
+"A case-based reasoner solves new problems by adapting solutions that
+ were used to solve old problems." - RIESBECK & SHANK, 1989
+
+ A case-based system RELIES UPON A LIBRARY OF CASES representing old 
+ problems and their solutions.
+
+ To solve a new problem, the system does the following:
+
+ - RETRIEVE the most similar case(s) from the library.
+ - REUSE the case(s) attempt to solve the problem.
+ - REVISE the proposed solution if necessary (adaption)
+ - RETAIN the new solution as part of a new case.
+
+ SEE LECTURES FOR STRUCTURE OF CBS.
+
+ ----- Retrieval and Adaption -----
+
+ The RETRIEVAL step requires a means of USING KEY ELEMENTS of the
+ present situation TO FIND AND RETRIEVE THE MOST SIMILAR CASE(S) FROM 
+ THE LIBRARY. NOTE: this may incorporate a (more or less) sophisticated
+ way of jusdging similarity.
+
+ The system might use a variant of the "nearest neighbour" algorithm.
+
+ Because we cannot find an exact match, we may need to exercise some
+ judgement to revise the solution that was found so as to fit it to the 
+ present problem. This process is known as "adaption".
+
+ SEE SLIDES FOR ALL FOLLOWING EXAMPLES ETC..
+
+ ----- When to use cased based systems -----
+
+ Indicators that a problem  domain is suitable for a CBR approach:
+
+ 1. There are existing RECORDSOF PREVIOUSLY SOLVED CASES.
+
+ 2. HISTORICAL CASES are often REFERRED TO IN SOLVING NEW CASES (as happens in law for example)
+
+ 3. HUMAN EXPERTS tend to TALK ABOUT THE PROBLEM DOMAIN IN TERMS OF EXAMPLES
+    rather than general rules or policies.
+
+ 4. THE PROBLEM DOMAIN IS NOT WELL-DEFINED OR WELL UNDERSTOOD. (e.g. machine
+    translation, where googles statistical approach appears to be 
+    succeesing where older, analytical approaches failed).
+
+ 5. EXPERIENCE is seen as being AT LEAST AS VALUABLE AS TEXTBOOK KNOWLEDGE.
+
+ ------------------------ END COURSE SECTION -------------------------
+
+
