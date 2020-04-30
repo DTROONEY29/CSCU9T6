@@ -1,0 +1,98 @@
+Information Systems 
+
+--------------- Bayesian Networks --------------
+
+------------ Uncertainty and Probability ------------
+
+------ What is a decision support system (DDS) ? -----
+
+A computer based system that COLLECTS, ORGANISES and ANALYSES data to 
+facilitate quality business decision making for management, operations 
+and planning.
+
+Systems that help people make decsions based on data that is combined 
+froma wide variety of sources.
+
+----- What is a Bayesian Network? -----
+
+A Bayesian Network is a way of describing the reltionships between 
+CAUSES and EFFECTS, and is made up of nodes and arcs.
+
+NODES: Random variables
+ARCS: Ĉasual or influential relationships
+
+For each node - tables give THE CONDITIONAL PROBABILITY of each possible
+outcome, given combinations of outcomes from parent nodes (see slides for
+diagrams).
+
+----- Applications of Bayesian Networks -----
+
+Main uses : to support decision making and to find strategies to solve 
+            tasks under uncertainty.
+
+Nowadays they are used for fault diagnosis, pharma trials, air traffic 
+management etc.
+
+----- Uncertainty and Probability -----
+
+The key feature of BNs is that they enable us to MODEL AND REASON about UNCERTAINTY.
+
+We need PROBABILITY to quantify uncertainty
+
+To understand and implement Bayesian networks, we need two mathematical 
+tools:
+
+- Probability theory 
+- Propositional logic
+
+----- DEFINITIONS -----
+
+UNCERTAINTY : The lack of certainty. A state of having LIMITED KNOWLEDGE 
+where it is impossible to exactly describe the existing state, a future 
+outcome, or more than one possible outcome.
+
+MEASUREMENT OF UNCERTAINTY : A set of possible states or outcomes where 
+PROBABILITIES are assigned to each possible state or outcome.
+
+RISK: A state of uncertainty where some possible outcomes have an 
+UNDESIRED EFFECT or SIGNIFICANT LOSS. 
+
+MEASUREMENT OF RISK : A set of measured uncertanties where some possible outcomes
+are losses, and the magnitude of those losses.
+
+----- Dealing with Uncertainty -----
+
+The real world is imperfect and knowledge based systems are expected to
+operate in the real-world.
+
+- Missing data
+- Ambiguous data 
+
+3 methods of dealing with uncertain reasoning:
+
+- Confidence factors / Certainty factors
+- Fuzzy logic
+- Bayesian theory
+
+----- Propositional (symbolic) logic -----
+
+LOGIC : the study of the principles of correct reasoning 
+
+PROPOSITIONAL LOGIC: study the ways of joining and/or modifying
+entire statements or propositions to form more complex ones.
+
+STATEMENT: a declarative sentance, a complete grammatical sentance that
+makes a claim:
+
+- snow is white
+- the moon is made of cheese
+
+Statements are considered invisible units. They can be TRUE or FALSE
+
+Letters or simple words (A,B,martin,late) are used to represent statements.
+
+SEE SLIDES FOR OPERATOR CONNECTIVES
+
+----- Intro to probability -----
+
+
